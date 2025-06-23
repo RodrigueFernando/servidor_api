@@ -8,12 +8,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// 🔑 Segredo do JWT
+// Segredo do JWT
 
 const JWT_SECRET = 'ifsp2025';
 
 const users = [];
-s
 //Mock de alunos
 const alunos = [
     { id: 1, nome: "Asdrubal", ra: "11111", nota1: 8.5, nota2: 9.5 },
@@ -166,9 +165,9 @@ app.delete('/alunos/:id', autenticarToken, (req, res) => {
 });
 
 //Inicialização do servidor
-const PORT = 3001; // Definindo a porta em uma constante para clareza
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`); // Mensagem corrigida
-});
+//const PORT = 3001; // Definindo a porta em uma constante para clareza
+//app.listen(PORT, () => {
+//    console.log(`Servidor rodando em http://localhost:${PORT}`); // Mensagem corrigida
+//});
 
 export default app;
