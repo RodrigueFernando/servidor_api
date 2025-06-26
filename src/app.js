@@ -42,15 +42,23 @@ function autenticarToken(req, res, next) {
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
+    console.log("req.body:", req.body);
+    console.log("username:", username);
+    console.log("password:", password);
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios.' });
+    }
+
     if (users.find(u => u.username === username)) {
         return res.status(400).json({ message: 'Usuário já existe!' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10); // <-- linha 49
     users.push({ username, password: hashedPassword });
-    console.log("Usuário registrado:", users);
     res.status(201).json({ message: 'Usuário registrado com sucesso!' });
 });
+
 
 // Login
 app.post('/login', async (req, res) => {
@@ -164,10 +172,5 @@ app.delete('/alunos/:id', autenticarToken, (req, res) => {
     res.json({ message: 'Aluno removido com sucesso!' });
 });
 
-//Inicialização do servidor
-//const PORT = 3001; // Definindo a porta em uma constante para clareza
-//app.listen(PORT, () => {
-//    console.log(`Servidor rodando em http://localhost:${PORT}`); // Mensagem corrigida
-//});
 
 export default app;
