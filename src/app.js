@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Segredo do JWT
 
 const JWT_SECRET = 'ifsp2025';
 
@@ -31,7 +30,7 @@ function autenticarToken(req, res, next) {
 
     jwt.verify(token, JWT_SECRET, (err, userPayload) => {
         if (err) return res.status(403).json({ message: 'Token inválido.' });
-        req.user = userPayload; // Armazena o payload do token em req.user
+        req.user = userPayload; 
         next();
     });
 }
@@ -85,9 +84,6 @@ app.get('/alunos', autenticarToken, (req, res) => {
     res.json(alunos);
 });
 
-// -------------------------------------------------------------
-// IMPORTANTE: Rotas mais específicas para alunos devem vir antes das genéricas!
-// -------------------------------------------------------------
 
 //Listar alunos e suas médias
 app.get('/alunos/medias', autenticarToken, (req, res) => {
@@ -171,6 +167,5 @@ app.delete('/alunos/:id', autenticarToken, (req, res) => {
 
     res.json({ message: 'Aluno removido com sucesso!' });
 });
-
 
 export default app;
