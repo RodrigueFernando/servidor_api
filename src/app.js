@@ -42,9 +42,9 @@ function autenticarToken(req, res, next) {
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
-    console.log("req.body:", req.body);
-    console.log("username:", username);
-    console.log("password:", password);
+   // console.log("req.body:", req.body);
+   // console.log("username:", username);
+   // console.log("password:", password);
 
     if (!username || !password) {
         return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios.' });
@@ -77,7 +77,7 @@ app.post('/login', async (req, res) => {
     );
 
     res.json({ message: 'Login realizado com sucesso!', token });
-    console.log('Login efetuado pelo usuário ' + user.username);
+   //  console.log('Login efetuado pelo usuário ' + user.username);
 });
 
 //Listar todos os alunos
@@ -100,9 +100,9 @@ app.get('/alunos/medias', autenticarToken, (req, res) => {
 
 //Listar alunos aprovados
 app.get('/alunos/aprovados', autenticarToken, (req, res) => {
-    const resultado = alunos.filter(a => ((a.nota1 + a.nota2) / 2) >= 6).map(a => ({
+    const resultado = alunos.map(a => ({
         nome: a.nome,
-        media: ((a.nota1 + a.nota2) / 2).toFixed(2)
+        status: ((a.nota1 + a.nota2) / 2) >= 6 ? "aprovado" : "reprovado"
     }));
     res.json(resultado);
 });
